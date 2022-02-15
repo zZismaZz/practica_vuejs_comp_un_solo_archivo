@@ -1,0 +1,120 @@
+* Diseño de Interfaces Web - VueJS: Componentes de un solo archivo
+  En esta práctica introduciremos los [[https://vuejs.org/v2/guide/single-file-components.html][componentes de un solo archivo]] de VueJS. También estudiaremos cómo obtener datos de una [[https://en.wikipedia.org/wiki/Web_API][API]] externa a través de llamadas [[https://en.wikipedia.org/wiki/Ajax_(programming)][AJAX]].
+
+** Archivos de la práctica
+   El repositorio incluye un esqueleto de aplicación creado con la [[https://cli.vuejs.org/][interfaz de línea de comandos de VueJS]]. En el código se incluyen varias líneas marcadas con ~TODO~ indicando los puntos donde se deben realizar modificaciones.
+   
+   El repositorio está organizado de la siguiente manera:
+   - Archivo ~package.json~. Contiene la configuración del proyecto VueJS. Se trata de un proyecto de [[https://nodejs.org/es/][Node]]. Se crea por defecto al crear el proyecto de VueJS.
+   - Archivo ~babel.config.js~. Archivo de configuración de [[https://babeljs.io/docs/en/next/][Babel]], una herramienta de compilación de JavaScript. No lo utilizaremos. Se crea por defecto al crear el proyecto de VueJS.
+   - Carpeta ~tests~. Contiene los tests de comprobación de la práctica. Dichos tests se podrán utilizar para comprobar si la práctica se ha realizado correctamente. Los tests se podrán ejecutar el número de veces que sea necesario.
+   - Carpeta ~public~. Contiene los *archivos estáticos* de la aplicación Vue. En esta carpeta se deberán almacenar todos los archivos estáticos que se necesiten (imágenes, archivos CSS,...).
+     - Archivo ~public/index.html~. Contiene el fichero HTML principal de la aplicación. En él se define la etiqueta ~<div>~ que almacenará la aplicación VueJS. Es el sitio indicado para *incluir librerías CSS*, como Bootstrap.
+   - Carpeta ~src~. Contiene el código fuente del proyecto de VueJS. Será la *carpeta principal de trabajo*. Almacena los ficheros ~.vue~ que definen los *componentes de un solo archivo* de la aplicación.
+     - Archivo ~main.js~. Archivo que define la *aplicación VueJS*. Su única tarea es crear una aplicación VueJS y cargar en ella el *componente principal de la aplicación*, almacenado en el archivo ~App.vue~.
+     - Archivo ~App.vue~. El *componente principal de la aplicación*. Es el *punto de entrada* para realizar la práctica. Su tarea será la de definir el *esquema y el funcionamiento general* de la aplicación web y *cargar los componentes secundarios* que necesite para su funcionamiento.
+     - Carpeta ~components~. Contiene los *componentes secundarios* que utilizará la aplicación. *Todos los componentes* que se creen estarán definidos en archivos ~.vue~ en esta carpeta.
+     - Carpeta ~assets~. Carpeta que almacena los archivos estáticos que utilizarán los componentes de VueJS. Puede utilizarse junto con la carpeta ~public~, utilizarse por si sola o no utilizarse en absoluto. No la utilizaremos en esta práctica.
+   - Carpeta ~dist~. Contiene el código *compilado* listo para ser *publicado en un servidor web*. Se generará si se ejecuta el comando ~npm run build~. Como es el resultado de una compilación, está excluida del repositorio en el archivo ~.gitignore~.
+
+** Requisitos de software
+Para poder realizar esta práctica y que funcione adecuadamente el entorno de test será necesario *instalar el siguiente software* en el equipo:
+- Navegador [[https://www.google.com/intl/es/chrome/][Chrome]].
+- Entorno de ejecución [[https://nodejs.org/es/][NodeJS]].
+
+** Desarrollo guiado por test
+Para realizar la práctica se seguirán los principios del [[https://es.wikipedia.org/wiki/Desarrollo_guiado_por_pruebas][Desarrollo Guiado por Test]]. Para ello se proporciona en el repositorio una serie de ficheros que permiten *ejecutar tests*. Dichos tests comprobarán que la web cumple con algunos de los requisitos de la práctica.
+
+¡OJO¡ El comando de test en esta práctica es ~npm run test:unit~.
+
+** Preparación
+1. Instalar los requisitos de software indicados
+2. Abrir un terminal
+3. Clonar el repositorio al equipo local mediante ~git clone~
+4. Acceder a la carpeta del repositorio
+5. Ejecutar el comando ~npm install~. Este comando instalará todas las librerías de Node necesarias para probar la aplicación VueJS y ejecutar los tests. Dichas librerías se guardarán en una carpeta con nombre ~node_modules~ dentro del repositorio. Nótese que dicha carpeta está excluida del repositorio en el archivo ~.gitignore~.
+6. Ejecutar el comando ~npm run serve~ para lanzar el servidor de test de VueJS. Una vez lanzado el servidor podremos visualizar la aplicación en la URL [[http://localhost:8080/]]. Los *cambios* que se realicen en el código fuente de la aplicación *se reflejarán automáticamente* sin necesidad de reiniciar el servidor.
+7. Ejecutar el comando ~npm run test:unit~ para lanzar los tests. Este comando podrá ejecutarse tantas veces como sea necesario. Por pantalla se mostrarán los tests que se pasan y los que no, de manera que se tendrá información sobre las acciones que hay que realizar.
+8. Si se desea desplegar la aplicación en un servidor web hay que *compilar* previamente la aplicación VueJS para que funcione correctamente. Para ello habrá que ejecutar el comando ~npm run build~. Una vez finalizado se deberá copiar el contenido de la carpeta ~dist~ al servidor y acceder a la ruta correspondiente para utilizarla.
+
+** Tareas a realizar
+   Esta práctica tiene como objetivo *crear una aplicación VueJS compleja* a través de componentes de un solo archivo. La aplicación es una [[https://es.wikipedia.org/wiki/Single-page_application][aplicación de página única]] que permitirá al usuario visualizar determinados datos disponibles a través de la *API de GitHub*.
+   
+   La aplicación utilizará *dos componentes* que se encargarán de formatear los datos provenientes de dicha API (en formato JSON). También deberá proporcionar los *controles* apropiados para *descargar los datos correspondientes* a través de llamadas [[https://es.wikipedia.org/wiki/AJAX][AJAX]]. Se utilizará [[https://getbootstrap.com/][Bootstrap]] para el formato visual.
+   
+   A continuación puede verse un ejemplo de funcionamiento:
+   [[./imagenes/funcionamiento.gif][./imagenes/funcionamiento.gif]]
+   
+*** Bootstrap
+    Se deberá cargar la librería CSS de Bootstrap en el archivo ~public/index.html~
+    
+*** API de GitHub
+    La API de GitHub es una [[https://en.wikipedia.org/wiki/Representational_state_transfer][API REST]] que proporciona un conjunto de puntos de destino (URLs) junto con unos [[https://developer.mozilla.org/es/docs/Web/HTTP/Methods][métodos de petición HTTP]] para identificar una serie de *recursos* sobre los que se puede operar. Se puede acceder a dicha API a través de https://api.github.com/.
+    
+    Para esta práctica únicamente utilizaremos los siguientes puntos de destino:
+    - https://api.github.com/users/{USER} - Al hacer una petición ~GET~ a este punto de destino sustituyendo ~{user}~ por un usuario concreto, se obtendrán los *datos de dicho usuario*. Por ejemplo, los datos del usuario de GitHub llamado ~vuejs~ están disponibles aquí: https://api.github.com/users/vuejs. Como puede verse, hay mucha información. Para la práctica solamente necesitaremos los siguientes campos del objeto de datos devuelto:
+      - ~login~ - Login del usuario para mostrarlo por pantalla.
+      - ~avatar_url~ - URL de la imagen del avatar del usuario.
+      - ~html_url~ - URL de la página de GitHub del usuario.
+      - ~repos_url~ - URL para obtener la lista de repositorios del usuario.
+    - https://api.github.com/users/{USER}/repos - Al hacer una petición ~GET~ a este punto de destino sustituyendo ~{user}~ por un usuario concreto, se obtendrá el *listado de los repositorios* de dicho usuario. En este caso los datos devueltos tienen formato de *array*. Por ejemplo, los repositorios del usuario de GitHub llamado ~vuejs~ están disponibles aquí: https://api.github.com/users/vuejs/repos. De cada elemento (repositorio) del array nos interesarán las siguientes propiedades:
+      - ~full_name~ - Nombre completo del repositorio
+      - ~html_url~ - URL para acceder al repositorio a través de la web de GitHub
+      - ~description~ Descripción del repositorio
+      - ~forks_count~ - Número de forks que tiene el repositorio
+
+**** Configuración de usuario y token
+      *¡IMPORTANTE!* La API de GitHub admite como máximo *60 peticiones a la hora* sin autenticación. Por ello se debe evitar realizar muchas peticiones durante la fase de diseño. Si se alcanza el límite máximo de peticiones no se podrán realizar más durante un determinado período de tiempo (algo inferior a una hora). Puede consultarse el número de llamadas realizadas a la API en este enlace: https://api.github.com/rate_limit. [[https://developer.github.com/v3/#rate-limiting][Más información en este enlace]].
+
+      Para evitar llegar al límite de consultas de la API de GitHub es necesario realizar las peticiones de manera *autenticada*. Para ello:
+      - Crear un [[https://docs.github.com/es/github/authenticating-to-github/creating-a-personal-access-token][token de acceso personal]] en tu cuenta de GitHub. Debe tener acceso al scope ~repo~. *Copia el token generado* porque no volverás a tener acceso a él.
+      - Crear un archivo llamado ~.env.local~ y guardarlo en la carpeta *raíz* del repositorio. El contenido del archivo será el siguiente:
+        #+begin_src bash
+VUE_APP_USERNAME=TU_NOMBRE_DE_USUARIO_DE_GITHUB
+VUE_APP_USERTOKEN=TU_TOKEN_DE_GITHUB
+        #+end_src
+      Este archivo no se subirá al repositorio, así que tus datos no se verán comprometidos.
+ 
+*** Aplicación VueJS
+    - Se encargará de mostrar el título de la página y cargar el componente ~GitHub.vue~
+
+*** Componente ~GitHub~
+- Plantilla:
+  - *Campo de texto* para que el usuario introduzca un nombre de usuario de GitHub. Debe tener un *evento* de tipo ~keydown~ que se active *al pulsar la tecla INTRO* y que llame al método ~obtenerUsuario~.
+  - *Componente de alerta* de Bootstrap para indicar si el usuario no existe. Inicialmente estará oculto.
+  - Componente tipo *card* de Bootstrap para mostrar los datos del usuario. Inicialmente estará oculto. Debe mostrar:
+    - La foto del avatar del usuario
+    - El login del usuario
+    - Un enlace a la URL de GitHub del usuario 
+    - Un botón tipo ~<button>~ denominado ~Repositorios~. Este botón deberá llamar al método ~obtenerRepositorios~ cuando se pulse.
+  - Un componente denominado ~GitHubRepos~ que se encargará de mostrar la lista de repositorios del usuario. Inicialmente estará oculto. El componente ~GitHubRepos~ deberá [[https://vuejs.org/v2/guide/components.html#Passing-Data-to-Child-Components-with-Props][recibir el listado de repositorios como parámetro]].
+- Variables de datos:
+  - Se deberán crear variables de datos para controlar el estado de la aplicación. Entre otras cosas, se debe almacenar:
+    - El nombre de usuario que se haya introducido en el campo de texto
+    - Los datos obtenidos de la API de GitHub con la información del usuario
+    - El listado de repositorios del usuario obtenidos de la API de GitHub
+  - Para implementar la funcionalidad de ocultar / mostrar se deberán utilizar *variables auxiliares* que almacenen el estado visible / invisible de cada uno de los elementos de la plantilla: componente de alerta (en caso de que haya error), /card/ de los datos del usuario y listado de repositorios. Además, se deberá *desactivar el campo de búsqueda* cuando se pulse la tecla INTRO y se volverá a activar cuando se reciban los datos.
+- Métodos (ya creados):
+  - ~obtenerUsuario~ - Este método se encarga de realizar la llamada a la API de GitHub para obtener los datos del usuario. Para ello utiliza la variables ~user~. Además, activa y desactiva las variables necesarias para mostrar u ocultar la distinta información del componente.
+  - ~obtenerRepos~ - Este método se encarga de realizar la llamada a la API de GitHub para obtener los repositorios del usuario. Para ello utilizará el *campo apropiado* que contiene la URL de los repositorios del usuario (tal como hemos explicado en el punto anterior, dicho campo es ~repos_url~). Además, activa y desactiva las variables necesarias para mostrar u ocultar la distinta información del componente.
+
+*** Componente ~GitHubRepos~
+- Plantilla:
+  - Se utilizará para mostrar el listado de repositorios de usuario (información pasada como parámetro) en el formato indicado.
+  - [[https://vuejs.org/v2/guide/list.html][Cada repositorio]] se deberá visualizar en un componente de [[https://getbootstrap.com/docs/4.0/components/list-group/][tipo lista]] de Bootstrap. *¡OJO!* Al iterar la lista de repositorios se tendrá que utilizar un atributo de tipo [[https://es.vuejs.org/v2/guide/list.html#key][key]] para identificar cada elemento de la lista. En nuestro caso se puede utilizar el atributo ~id~ o el atributo ~name~ del repositorio.
+  - Cada elemento de la lista (repositorio) estará formado por:
+    - Un *enlace*:
+      - Su texto será el *nombre completo del repositorio*
+      - Su URL de destino será la *URL del repositorio* para acceder a través de la web de GitHub
+    - Un componente [[https://getbootstrap.com/docs/4.0/components/badge/][badge]] de Bootstrap que muestre el *número de forks del repositorio*. Deberá estar alineado a la derecha.
+    - El elemento de la lista tendrá un atributo ~title~ cuyo contenido será la *descripción* del repositorio. El atributo ~title~ puede [[https://developer.mozilla.org/es/docs/Web/HTML/Atributos_Globales/title][mostrar información en un cuadro emergente al pasar el ratón por encima]].
+- Parámetros:
+  - ~repolist~ - Parámetro que contiene el array de repositorios del usuario.
+
+** Formato de la entrega
+- Cada alumno dispondrá de un repositorio en GitHub para su trabajo personal. Dicho repositorio se creará automáticamente al hacer clic en el enlace y aceptar la tarea (/assignment/).
+- Todos los archivos de la práctica se guardarán en el repositorio y se subirán a GitHub periódicamente. Es conveniente ir subiendo los cambios aunque no sean definitivos.
+- Para cualquier tipo de *duda o consulta* se pueden abrir ~Issues~ haciendo referencia al profesor mediante el texto ~@antroher~ dentro del texto del ~Issue~.
+- Una vez *finalizada* la tarea se debe crear un ~Issue~ en el repositorio haciendo referencia al profesor incluyendo el texto ~@antroher~ dentro del ~Issue~.
+
+
